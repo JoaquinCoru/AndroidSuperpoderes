@@ -13,7 +13,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -27,7 +26,8 @@ import com.joaquinco.marvelapp.domain.MarvelCharacter
 @Preview(showBackground = true)
 @Composable
 fun MyLazyGrid(characters: List<MarvelCharacter> = emptyList()) {
-    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize()) {
         items(characters) {
             Item(it.name, it.photo)
         }
@@ -57,7 +57,7 @@ fun Item(
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(8.dp)
             .clip(shape = RoundedCornerShape(20.dp))
             .background(Color.Cyan)
