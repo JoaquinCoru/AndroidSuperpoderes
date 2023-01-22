@@ -3,9 +3,14 @@ package com.joaquinco.marvelapp.ui.characterlist
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joaquinco.marvelapp.domain.MarvelCharacter
 import com.joaquinco.marvelapp.domain.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -19,6 +24,9 @@ class CharacterListViewModel @Inject constructor(
         private val TAG = "ListViewModel: "
     }
 
+    private val _characters = MutableStateFlow(emptyList<MarvelCharacter>())
+    val characters: StateFlow<List<MarvelCharacter>> get() = _characters
+
     init {
         getCharacters()
     }
@@ -26,11 +34,11 @@ class CharacterListViewModel @Inject constructor(
     fun getCharacters() {
 
         viewModelScope.launch {
-            val response = withContext(Dispatchers.IO){
-                repository.getCharacters()
+
+            repository.getCharacters().flowOn(Dispatchers.IO).collect {
+                _characters.value = it
             }
 
-            Log.d(TAG, response.toString())
         }
     }
 

@@ -1,6 +1,6 @@
 package com.joaquinco.marvelapp.domain
 
-data class Character(
+data class MarvelCharacter(
     val id:String,
     val name: String,
     val photo: String

@@ -32,7 +32,7 @@ data class Thumbnail (
     val path: String,
     val extension: String
 ){
-    fun getImageUrl(type: PhotoType): String {
+    fun getImageUrl(type: PhotoType = PhotoType.landscape): String {
         return "$path/${type.value}.${extension}"
     }
 }
@@ -44,6 +44,6 @@ enum class Extension(val value: String) {
 
 enum class PhotoType(val value:String) {
     portrait("portrait_xlarge"),
-    landscap("landscape_xlarge")
+    landscape("landscape_xlarge")
 }
 
