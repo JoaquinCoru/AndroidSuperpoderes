@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RemoteDataSource {
 
-    suspend fun getCharacters(): Flow<MarvelResponse>
+    suspend fun getCharacters(): MarvelResponse
 }

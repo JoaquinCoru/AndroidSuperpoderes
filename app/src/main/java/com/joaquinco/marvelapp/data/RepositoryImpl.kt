@@ -1,19 +1,33 @@
 package com.joaquinco.marvelapp.data
 
+import com.joaquinco.marvelapp.data.local.LocalDataSource
+import com.joaquinco.marvelapp.data.mappers.LocalToPresentationMapper
+import com.joaquinco.marvelapp.data.mappers.RemoteToLocalMapper
 import com.joaquinco.marvelapp.data.mappers.RemoteToPresentationMapper
 import com.joaquinco.marvelapp.data.remote.RemoteDataSource
 import com.joaquinco.marvelapp.domain.MarvelCharacter
 import com.joaquinco.marvelapp.domain.Repository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
+    private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
-    private val remoteToPresentationMapper: RemoteToPresentationMapper
+    private val remoteToLocalMapper: RemoteToLocalMapper,
+    private val localToPresentationMapper: LocalToPresentationMapper
 ): Repository {
 
-    override suspend fun getCharacters(): Flow<List<MarvelCharacter>> {
-        return remoteDataSource.getCharacters().map { marvelResponse -> remoteToPresentationMapper.map(marvelResponse) }
+    override suspend fun getCharactersWithCache(): Flow<List<MarvelCharacter>> {
+        // 1º Compruebo si hay datos en local
+        if (localDataSource.getNumberOfCharacters()==0) {
+            //2 Pido datos a remoto
+            val remoteCharacters = remoteDataSource.getCharacters()
+            //3 Guardo datos en local
+            localDataSource.insertCharacters(remoteToLocalMapper.map(remoteCharacters))
+        }
+        // 4º Devuelvo datos local
+        return localDataSource.getCharacters().map { localToPresentationMapper.map(it) }
     }
+
 }

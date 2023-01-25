@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): RemoteDataSource  {
-    override suspend fun getCharacters(): Flow<MarvelResponse> {
+    override suspend fun getCharacters(): MarvelResponse {
 
-        val result = api.getCharacters()
-        return flow { emit(result) }
+        return api.getCharacters()
+//        return flow { emit(result) }
     }
 }

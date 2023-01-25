@@ -1,6 +1,8 @@
 package com.joaquinco.marvelapp.di
 
 import com.joaquinco.marvelapp.data.RepositoryImpl
+import com.joaquinco.marvelapp.data.local.LocalDataSource
+import com.joaquinco.marvelapp.data.local.LocalDataSourceImpl
 import com.joaquinco.marvelapp.data.remote.RemoteDataSource
 import com.joaquinco.marvelapp.data.remote.RemoteDataSourceImpl
 import com.joaquinco.marvelapp.domain.Repository
@@ -18,4 +20,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource
+
+    @Binds
+    abstract fun bindLocalDataSource(localDataSourceImpl: LocalDataSourceImpl): LocalDataSource
 }

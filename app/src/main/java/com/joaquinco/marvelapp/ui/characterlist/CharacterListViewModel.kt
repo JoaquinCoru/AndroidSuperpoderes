@@ -33,9 +33,10 @@ class CharacterListViewModel @Inject constructor(
 
     fun getCharacters() {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
-            repository.getCharacters().flowOn(Dispatchers.IO).collect {
+            repository.getCharactersWithCache().flowOn(Dispatchers.IO).collect {
+                Log.d(TAG, it.toString())
                 _characters.value = it
             }
 

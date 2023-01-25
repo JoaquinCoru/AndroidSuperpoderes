@@ -1,6 +1,5 @@
 package com.joaquinco.marvelapp.di
 
-import com.joaquinco.marvelapp.BuildConfig
 import com.joaquinco.marvelapp.data.remote.MarvelAPI
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

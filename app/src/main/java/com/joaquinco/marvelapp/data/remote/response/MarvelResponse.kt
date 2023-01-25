@@ -37,13 +37,28 @@ data class Thumbnail (
     }
 }
 
-enum class Extension(val value: String) {
-    GIF("gif"),
-    Jpg("jpg")
-}
-
 enum class PhotoType(val value:String) {
     portrait("portrait_xlarge"),
     landscape("landscape_xlarge")
 }
+
+
+/*enum class Extension{
+    GIF,
+    JPG
+}*/
+
+/*class ExtensionAdapter {
+    @ToJson fun toJson(extension: Extension): String {
+        return  extension.name
+    }
+
+    @FromJson fun fromJson(extension: String): Extension {
+        return when (extension) {
+            "jpg" -> Extension.JPG
+            "gif" -> Extension.GIF
+            else -> throw JsonDataException("Unknown extension: $extension")
+        }
+    }
+}*/
 
