@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.joaquinco.marvelapp.ui.components.MyLazyGrid
+import com.joaquinco.marvelapp.ui.components.CharactersGrid
 
 @Composable
 fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel()) {
@@ -34,21 +34,28 @@ fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel()) {
             val characters = viewModel.characters.collectAsState()
 
             if (characters.value.isEmpty()) {
-                Spacer(modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f))
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(75.dp)
-                        .weight(2f)
-                )
+                ProgressLayout()
             } else {
-                MyLazyGrid(characters.value)
+                CharactersGrid(characters.value)
             }
-
         }
 
-
     }
+}
+
+@Composable
+fun ProgressLayout(){
+
+    Column() {
+        Spacer(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f))
+        CircularProgressIndicator(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(75.dp)
+                .weight(2f)
+        )
+    }
+
 }

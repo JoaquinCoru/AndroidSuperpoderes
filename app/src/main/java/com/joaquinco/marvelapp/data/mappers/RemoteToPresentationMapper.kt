@@ -9,7 +9,7 @@ class RemoteToPresentationMapper @Inject constructor() {
     fun map(marvelResponse: MarvelResponse): List<MarvelCharacter> {
         return marvelResponse.data.results.map {
             MarvelCharacter(
-                it.id,
+                it.id.toString(),
                 it.name,
                 it.thumbnail.getImageUrl()
             )
