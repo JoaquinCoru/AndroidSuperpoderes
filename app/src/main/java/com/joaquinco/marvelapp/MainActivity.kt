@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = Screens.Home.route) {
                         composable(Screens.Home.route) {
-                            CharacterListScreen() { id ->
-                                navController.navigate(Screens.Detail.createRoute(id))
+                            CharacterListScreen() { id, name ->
+                                navController.navigate(Screens.Detail.createRoute(id, name))
                             }
                         }
 
@@ -44,12 +44,17 @@ class MainActivity : ComponentActivity() {
                             Screens.Detail.route, arguments = listOf(
                                 navArgument(Screens.Detail.ARG_ID) {
                                     type = NavType.StringType
-                                })
+                                },
+                                navArgument(Screens.Detail.ARG_NAME) {
+                                    type = NavType.StringType
+                                }
+                            )
                         ) { backStackEntry ->
                             val id =
                                 backStackEntry.arguments?.getString(Screens.Detail.ARG_ID) ?: ""
+                            val name = backStackEntry.arguments?.getString(Screens.Detail.ARG_NAME) ?: ""
 
-                            DetailListScreen(id)
+                            DetailListScreen(id, name)
                         }
                     }
 
@@ -58,6 +63,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
 
 @Composable
 fun Greeting(name: String) {

@@ -18,7 +18,7 @@ import com.joaquinco.marvelapp.ui.components.CharactersGrid
 
 @Preview(showBackground = true)
 @Composable
-fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel(), onCharacterClick: (String)-> Unit = {}) {
+fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel(), onCharacterClick: (String, String)-> Unit = {_,_ ->}) {
     Scaffold(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -42,8 +42,8 @@ fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel(), onC
                 CharactersGrid(characters.value,{ mvcharacter ->
                     viewModel.setLike(mvcharacter)
                     Log.d("Character List", mvcharacter.isFavorite.toString())
-                }){ characterId ->
-                    onCharacterClick(characterId)
+                }){ characterId, characterName ->
+                    onCharacterClick(characterId, characterName)
                 }
             }
         }
