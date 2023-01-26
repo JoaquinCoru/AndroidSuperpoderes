@@ -7,4 +7,5 @@ interface LocalDataSource {
     fun getCharacters(): Flow<List<MVCharacterLocal>>
     fun insertCharacters(characters: List<MVCharacterLocal>)
     fun getNumberOfCharacters():Int
+    fun updateCharacter(character: MVCharacterLocal)
 }

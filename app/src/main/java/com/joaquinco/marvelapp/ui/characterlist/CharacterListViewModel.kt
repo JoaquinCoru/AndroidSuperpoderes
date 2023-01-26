@@ -43,4 +43,14 @@ class CharacterListViewModel @Inject constructor(
         }
     }
 
+    fun setLike(character: MarvelCharacter){
+
+//        character.isFavorite = isFavorite
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            repository.setLike(character)
+        }
+    }
+
 }

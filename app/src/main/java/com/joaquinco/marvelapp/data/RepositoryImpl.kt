@@ -30,4 +30,8 @@ class RepositoryImpl @Inject constructor(
         return localDataSource.getCharacters().map { localToPresentationMapper.map(it) }
     }
 
+    override suspend fun setLike(character: MarvelCharacter) {
+        localDataSource.updateCharacter(localToPresentationMapper.map(character))
+    }
+
 }

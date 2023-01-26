@@ -1,5 +1,6 @@
 package com.joaquinco.marvelapp.ui.characterlist
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -36,7 +37,10 @@ fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel()) {
             if (characters.value.isEmpty()) {
                 ProgressLayout()
             } else {
-                CharactersGrid(characters.value)
+                CharactersGrid(characters.value){ mvcharacter ->
+                    viewModel.setLike(mvcharacter)
+                    Log.d("Character List", mvcharacter.isFavorite.toString())
+                }
             }
         }
 

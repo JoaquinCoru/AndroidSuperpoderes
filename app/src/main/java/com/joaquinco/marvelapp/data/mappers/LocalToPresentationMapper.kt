@@ -14,4 +14,8 @@ class LocalToPresentationMapper @Inject constructor() {
     fun map(character:MVCharacterLocal): MarvelCharacter {
         return MarvelCharacter(character.id,character.name,character.photo, character.isFavorite)
     }
+
+    fun map(character:MarvelCharacter): MVCharacterLocal {
+        return MVCharacterLocal(character.id,character.name,character.photo,character.isFavorite)
+    }
 }

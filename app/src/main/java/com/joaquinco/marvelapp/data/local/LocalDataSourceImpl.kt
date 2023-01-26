@@ -18,4 +18,8 @@ class LocalDataSourceImpl @Inject constructor(
     override fun getNumberOfCharacters(): Int {
         return dao.getNumberOfCharacters()
     }
+
+    override fun updateCharacter(character: MVCharacterLocal) {
+        dao.updateCharacter(character)
+    }
 }

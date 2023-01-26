@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import androidx.room.Update
 import com.joaquinco.marvelapp.data.local.model.MVCharacterLocal
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,7 @@ interface MVCharacterDao {
 
     @Query("SElECT COUNT(id) FROM characters")
     fun getNumberOfCharacters():Int
+
+    @Update
+    fun updateCharacter(character: MVCharacterLocal)
 }

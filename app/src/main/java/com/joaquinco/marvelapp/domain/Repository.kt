@@ -8,4 +8,5 @@ interface Repository {
 //    suspend fun getCharacters(): Flow<List<MarvelCharacter>>
 
     suspend fun getCharactersWithCache(): Flow<List<MarvelCharacter>>
+    suspend fun setLike(character: MarvelCharacter)
 }

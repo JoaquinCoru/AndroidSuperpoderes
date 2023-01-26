@@ -5,16 +5,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,30 +25,42 @@ import coil.compose.rememberAsyncImagePainter
 import com.joaquinco.marvelapp.R
 import com.joaquinco.marvelapp.domain.MarvelCharacter
 
+val charactersDummyList = listOf(
+    MarvelCharacter(
+        "id",
+        "3-D Man",
+        "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/landscape_xlarge.jpg"
+    ),
+    MarvelCharacter(
+        "id",
+        "3-D Man",
+        "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/landscape_xlarge.jpg"
+    )
+)
+
 @Preview(showBackground = true)
 @Composable
-fun CharactersGrid(characters: List<MarvelCharacter> = emptyList()) {
+fun CharactersGrid(characters: List<MarvelCharacter> = charactersDummyList, setFavorite:(MarvelCharacter)->Unit= {}) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize()
     ) {
-        items(characters) {
-            Item(it.name, it.photo)
+        items(characters) { character ->
+            ItemCharacter(character.name, character.photo, character.isFavorite){ favorite ->
+                setFavorite(MarvelCharacter(character.id,character.name, character.photo, favorite))
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun Item(
+fun ItemCharacter(
     hero: String = "3-D Man",
     photo: String = "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/landscape_xlarge.jpg",
-    isFavorite: Boolean = false
+    isFavorite: Boolean = false,
+    setFavorite: (Boolean) -> Unit = {}
 ) {
-
-    var favorite by rememberSaveable {
-        mutableStateOf(isFavorite)
-    }
 
     Box(
         modifier = Modifier
@@ -65,7 +74,7 @@ fun Item(
                 .fillMaxWidth()
                 .padding(8.dp)
                 .clip(shape = RoundedCornerShape(20.dp))
-                .background(if (favorite) Color.Yellow else Color.Cyan)
+                .background(if (isFavorite) Color.Yellow else Color.Cyan)
         ) {
 
             Image(
@@ -89,9 +98,9 @@ fun Item(
                 .padding(10.dp, 15.dp, 15.dp, 10.dp)
                 .align(Alignment.TopEnd)
         ) {
-            FavoritesIcon(favorite) {
-                favorite = !favorite
-                Log.d("En Item", favorite.toString())
+            FavoritesIcon(isFavorite) {
+                setFavorite(!isFavorite)
+                Log.d("En Item", isFavorite.toString())
 
             }
         }
@@ -121,18 +130,3 @@ fun FavoritesIcon(isFavorite: Boolean = false, onClick: () -> Unit) {
     )
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun MyLazyColumn(characters: List<MarvelCharacter> = emptyList()) {
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        items(characters) { character ->
-            Item(character.name, character.photo)
-        }
-    }
-
-}
