@@ -1,4 +1,4 @@
-package com.joaquinco.marvelapp.ui.characterlist
+package com.joaquinco.marvelapp.ui.characterList
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -11,12 +11,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.joaquinco.marvelapp.ui.components.CharactersGrid
 
+@Preview(showBackground = true)
 @Composable
-fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel()) {
+fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel(), onCharacterClick: (String)-> Unit = {}) {
     Scaffold(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -37,9 +39,11 @@ fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel()) {
             if (characters.value.isEmpty()) {
                 ProgressLayout()
             } else {
-                CharactersGrid(characters.value){ mvcharacter ->
+                CharactersGrid(characters.value,{ mvcharacter ->
                     viewModel.setLike(mvcharacter)
                     Log.d("Character List", mvcharacter.isFavorite.toString())
+                }){ characterId ->
+                    onCharacterClick(characterId)
                 }
             }
         }

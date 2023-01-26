@@ -40,14 +40,16 @@ val charactersDummyList = listOf(
 
 @Preview(showBackground = true)
 @Composable
-fun CharactersGrid(characters: List<MarvelCharacter> = charactersDummyList, setFavorite:(MarvelCharacter)->Unit= {}) {
+fun CharactersGrid(characters: List<MarvelCharacter> = charactersDummyList, setFavorite:(MarvelCharacter)->Unit= {}, goDetail: (String) -> Unit = {}) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize()
     ) {
         items(characters) { character ->
-            ItemCharacter(character.name, character.photo, character.isFavorite){ favorite ->
+            ItemCharacter(character.name, character.photo, character.isFavorite,{ favorite ->
                 setFavorite(MarvelCharacter(character.id,character.name, character.photo, favorite))
+            }){
+                goDetail(character.id)
             }
         }
     }
@@ -59,13 +61,15 @@ fun ItemCharacter(
     hero: String = "3-D Man",
     photo: String = "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784/landscape_xlarge.jpg",
     isFavorite: Boolean = false,
-    setFavorite: (Boolean) -> Unit = {}
+    setFavorite: (Boolean) -> Unit = {},
+    goDetail: () -> Unit = {}
 ) {
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
+            .clickable { goDetail() }
     ) {
 
         Column(

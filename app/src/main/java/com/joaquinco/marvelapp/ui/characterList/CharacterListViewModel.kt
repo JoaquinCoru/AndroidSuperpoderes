@@ -1,4 +1,4 @@
-package com.joaquinco.marvelapp.ui.characterlist
+package com.joaquinco.marvelapp.ui.characterList
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -9,10 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
