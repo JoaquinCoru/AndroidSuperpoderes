@@ -10,4 +10,8 @@ class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): Remo
         return api.getCharacters()
 //        return flow { emit(result) }
     }
+
+    override suspend fun getSeries(characterId: Int): Flow<MarvelResponse> {
+        return flow { emit(api.getSeries(characterId)) }
+    }
 }

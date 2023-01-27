@@ -11,7 +11,7 @@ class RemoteToLocalMapper @Inject constructor() {
         return marvelResponse.data.results.map {
             MVCharacterLocal(
                 it.id.toString(),
-                it.name,
+                it?.name ?: "",
                 it.thumbnail.getImageUrl()
             )
         }

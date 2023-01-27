@@ -6,6 +6,7 @@ import com.joaquinco.marvelapp.data.mappers.RemoteToLocalMapper
 import com.joaquinco.marvelapp.data.mappers.RemoteToPresentationMapper
 import com.joaquinco.marvelapp.data.remote.RemoteDataSource
 import com.joaquinco.marvelapp.domain.MarvelCharacter
+import com.joaquinco.marvelapp.domain.MarvelSerie
 import com.joaquinco.marvelapp.domain.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -15,7 +16,8 @@ class RepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
     private val remoteToLocalMapper: RemoteToLocalMapper,
-    private val localToPresentationMapper: LocalToPresentationMapper
+    private val localToPresentationMapper: LocalToPresentationMapper,
+    private val remoteToPresentationMapper: RemoteToPresentationMapper
 ): Repository {
 
     override suspend fun getCharactersWithCache(): Flow<List<MarvelCharacter>> {
@@ -32,6 +34,10 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun setLike(character: MarvelCharacter) {
         localDataSource.updateCharacter(localToPresentationMapper.map(character))
+    }
+
+    override suspend fun getSeries(characterId: Int): Flow<List<MarvelSerie>> {
+        return remoteDataSource.getSeries(characterId).map { remoteToPresentationMapper.mapSeries(it) }
     }
 
 }

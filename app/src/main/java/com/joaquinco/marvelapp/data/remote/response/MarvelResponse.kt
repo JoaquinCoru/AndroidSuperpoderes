@@ -8,10 +8,10 @@ data class MarvelResponse (
     val attributionText: String,
     val attributionHTML: String,
     val etag: String,
-    val data: Data
+    val data: DataMarvel
 )
 
-data class Data (
+data class DataMarvel (
     val offset: Long,
     val limit: Long,
     val total: Long,
@@ -21,11 +21,11 @@ data class Data (
 
 data class Result (
     val id: Int,
-    val name: String,
-    val description: String,
-    val modified: String,
+    val name: String?, //nullable para characters
+    val title: String?, //nullable para series
+    val description: String?, // Puede o no venir a vacio
     val thumbnail: Thumbnail,
-    val resourceURI: String
+    val resourceURI: String? // Puede o no venir a vacio
 )
 
 data class Thumbnail (

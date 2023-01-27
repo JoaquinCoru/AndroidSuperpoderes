@@ -54,7 +54,9 @@ class MainActivity : ComponentActivity() {
                                 backStackEntry.arguments?.getString(Screens.Detail.ARG_ID) ?: ""
                             val name = backStackEntry.arguments?.getString(Screens.Detail.ARG_NAME) ?: ""
 
-                            DetailListScreen(id, name)
+                            DetailListScreen(id, name,{
+                                navController.navigateUp()
+                            })
                         }
                     }
 
