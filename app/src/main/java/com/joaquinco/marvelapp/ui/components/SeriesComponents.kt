@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,10 +30,29 @@ fun DetailGrid(series: List<MarvelSerie> = emptyList()) {
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize()
     ) {
+        item(span = { GridItemSpan(2) }) {
+            Title(text = "Series")
+        }
+
         items(series) { serie ->
             ItemSerie(serie.title, serie.photo)
         }
+
+        item(span = { GridItemSpan(2) }) {
+            Title(text = "Comics")
+        }
+
     }
+}
+
+@Composable
+fun Title(text: String) {
+    Text(
+        text,
+        style = MaterialTheme.typography.h5,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(5.dp)
+    )
 }
 
 
@@ -53,8 +73,9 @@ fun ItemSerie(
         Image(
             painter = rememberAsyncImagePainter(model = photo),
             contentDescription = "Compose icon",
-            modifier = Modifier.size(150.dp)
-                .padding(0.dp,5.dp)
+            modifier = Modifier
+                .size(150.dp)
+                .padding(0.dp, 5.dp)
         )
         Text(
             text = title,

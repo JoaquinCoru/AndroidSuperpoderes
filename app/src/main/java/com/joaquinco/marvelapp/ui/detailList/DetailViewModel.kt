@@ -22,15 +22,19 @@ class DetailViewModel @Inject constructor(
         private val TAG = "DetailViewModel: "
     }
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> get() = _isLoading
+
     private val _series = MutableStateFlow(emptyList<MarvelSerie>())
     val series:StateFlow<List<MarvelSerie>> get() = _series
 
     fun getSeries(characterId: Int) {
-
+        _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             repository.getSeries(characterId).flowOn(Dispatchers.IO).collect{
                 Log.d(TAG,it.toString())
                 _series.value = it
+                _isLoading.value = false
             }
         }
     }

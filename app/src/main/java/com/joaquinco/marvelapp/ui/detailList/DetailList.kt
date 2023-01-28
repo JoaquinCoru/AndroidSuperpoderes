@@ -1,10 +1,14 @@
 package com.joaquinco.marvelapp.ui.detailList
 
 import android.util.Log
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -53,26 +57,22 @@ fun DetailListScreen(
             )
         }
     ) {
-
+        val isLoading = viewModel.isLoading.collectAsState()
+        val series = viewModel.series.collectAsState()
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
 
-            val series = viewModel.series.collectAsState()
+            if (isLoading.value) {
 
-            if (series.value.isEmpty()) {
                 ProgressLayout()
-            }else {
-                Text(
-                    "Series",
-                    style = MaterialTheme.typography.h5,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(5.dp)
-                )
-                DetailGrid(series.value)
 
+            } else {
+
+                DetailGrid(series.value)
 
             }
         }
