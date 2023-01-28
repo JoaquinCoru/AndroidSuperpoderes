@@ -32,13 +32,6 @@ fun CharacterListScreen(viewModel: CharacterListViewModel = hiltViewModel(), onC
             modifier = Modifier.fillMaxSize()
         ) {
 
-/*            Text(
-                "Lista de personajes",
-                style = MaterialTheme.typography.h5,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(5.dp)
-            )
-            */
             val characters = viewModel.characters.collectAsState()
 
             if (characters.value.isEmpty()) {

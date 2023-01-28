@@ -25,7 +25,7 @@ import com.joaquinco.marvelapp.domain.MarvelSerie
 
 @Preview(showBackground = true)
 @Composable
-fun DetailGrid(series: List<MarvelSerie> = emptyList()) {
+fun DetailGrid(series: List<MarvelSerie> = emptyList(), comics: List<MarvelSerie> = emptyList()) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize()
@@ -40,6 +40,10 @@ fun DetailGrid(series: List<MarvelSerie> = emptyList()) {
 
         item(span = { GridItemSpan(2) }) {
             Title(text = "Comics")
+        }
+
+        items(comics) { comic ->
+            ItemSerie(comic.title, comic.photo)
         }
 
     }

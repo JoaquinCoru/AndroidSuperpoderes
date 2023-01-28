@@ -38,6 +38,7 @@ fun DetailListScreen(
         val idNumber = id.toInt()
         Log.d("Vista", "LLamando get series")
         viewModel.getSeries(idNumber)
+        viewModel.getComics(idNumber)
     })
 
     Scaffold(modifier = Modifier.fillMaxSize(),
@@ -59,6 +60,7 @@ fun DetailListScreen(
     ) {
         val isLoading = viewModel.isLoading.collectAsState()
         val series = viewModel.series.collectAsState()
+        val comics = viewModel.comics.collectAsState()
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -71,8 +73,11 @@ fun DetailListScreen(
                 ProgressLayout()
 
             } else {
-
-                DetailGrid(series.value)
+                if (series.value.isEmpty() && comics.value.isEmpty() ){
+                    Text(text = "No hay resultados") //P. ej. Aginar, que no tiene
+                }else{
+                    DetailGrid(series.value, comics.value)
+                }
 
             }
         }

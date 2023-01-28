@@ -4,6 +4,7 @@ import com.joaquinco.marvelapp.data.local.LocalDataSource
 import com.joaquinco.marvelapp.data.mappers.LocalToPresentationMapper
 import com.joaquinco.marvelapp.data.mappers.RemoteToLocalMapper
 import com.joaquinco.marvelapp.data.mappers.RemoteToPresentationMapper
+import com.joaquinco.marvelapp.data.remote.MarvelResponse
 import com.joaquinco.marvelapp.data.remote.RemoteDataSource
 import com.joaquinco.marvelapp.domain.MarvelCharacter
 import com.joaquinco.marvelapp.domain.MarvelSerie
@@ -38,6 +39,10 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getSeries(characterId: Int): Flow<List<MarvelSerie>> {
         return remoteDataSource.getSeries(characterId).map { remoteToPresentationMapper.mapSeries(it) }
+    }
+
+    override suspend fun getComics(characterId: Int): Flow<List<MarvelSerie>> {
+        return remoteDataSource.getComics(characterId).map { remoteToPresentationMapper.mapSeries(it) }
     }
 
 }
