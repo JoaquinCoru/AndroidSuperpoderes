@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -127,6 +128,7 @@ fun FavoritesIcon(isFavorite: Boolean = false, onClick: () -> Unit) {
         contentDescription = "Favorite icon",
         modifier = Modifier
             .size(30.dp)
+            .testTag(if (isFavorite) {R.drawable.red_heart.toString()}  else {R.drawable.white_heart.toString()})
             .clickable {
                 onClick()
                 Log.d("En Imagen", isFavorite.toString())
