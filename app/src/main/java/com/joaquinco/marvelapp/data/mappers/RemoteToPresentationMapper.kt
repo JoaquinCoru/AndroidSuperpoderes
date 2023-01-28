@@ -1,6 +1,7 @@
 package com.joaquinco.marvelapp.data.mappers
 
 import com.joaquinco.marvelapp.data.remote.MarvelResponse
+import com.joaquinco.marvelapp.data.remote.PhotoType
 import com.joaquinco.marvelapp.domain.MarvelCharacter
 import com.joaquinco.marvelapp.domain.MarvelSerie
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class RemoteToPresentationMapper @Inject constructor() {
             MarvelSerie(
                 it.id.toString(),
                 it?.title ?: "",
-                it.thumbnail.getImageUrl()
+                it.thumbnail.getImageUrl(PhotoType.portrait)
             )
         }
     }

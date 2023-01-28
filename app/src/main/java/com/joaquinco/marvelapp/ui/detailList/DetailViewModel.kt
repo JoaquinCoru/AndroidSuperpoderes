@@ -3,9 +3,12 @@ package com.joaquinco.marvelapp.ui.detailList
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.joaquinco.marvelapp.domain.MarvelSerie
 import com.joaquinco.marvelapp.domain.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,11 +22,15 @@ class DetailViewModel @Inject constructor(
         private val TAG = "DetailViewModel: "
     }
 
+    private val _series = MutableStateFlow(emptyList<MarvelSerie>())
+    val series:StateFlow<List<MarvelSerie>> get() = _series
+
     fun getSeries(characterId: Int) {
 
         viewModelScope.launch(Dispatchers.IO) {
             repository.getSeries(characterId).flowOn(Dispatchers.IO).collect{
                 Log.d(TAG,it.toString())
+                _series.value = it
             }
         }
     }
