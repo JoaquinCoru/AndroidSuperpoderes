@@ -2,7 +2,6 @@ package com.joaquinco.marvelapp
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import com.joaquinco.marvelapp.ui.components.ItemCharacter
 import org.junit.Rule
