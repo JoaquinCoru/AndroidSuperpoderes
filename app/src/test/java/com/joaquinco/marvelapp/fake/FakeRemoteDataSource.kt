@@ -17,11 +17,11 @@ class FakeRemoteDataSource() : RemoteDataSource {
     }
 
     override suspend fun getSeries(characterId: Int): Flow<MarvelResponse> {
-        return flow { marvelResponseFake }
+        return flow { emit(marvelResponseFake)  }
     }
 
     override suspend fun getComics(characterId: Int): Flow<MarvelResponse> {
-        return  flow { marvelResponseFake }
+        return  flow { emit(marvelResponseFake) }
     }
 
 }

@@ -36,7 +36,7 @@ class DetailViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             repository.getSeries(characterId).flowOn(Dispatchers.IO).collect{
-                Log.d("Series",it.toString())
+//                Log.d("Series",it.toString())
                 _series.value = it
                 _isLoading.value = false
             }
@@ -47,7 +47,7 @@ class DetailViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             repository.getComics(characterId).flowOn(Dispatchers.IO).collect{
-                Log.d("Comics", it.toString())
+//                Log.d("Comics", it.toString())
                 _comics.value = it
                 _isLoading.value = false
             }

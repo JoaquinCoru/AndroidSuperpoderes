@@ -34,7 +34,7 @@ class CharacterListViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             repository.getCharactersWithCache().flowOn(Dispatchers.IO).collect {
-                Log.d(TAG, it.toString())
+//                Log.d(TAG, it.toString())
                 _characters.value = it
             }
 
