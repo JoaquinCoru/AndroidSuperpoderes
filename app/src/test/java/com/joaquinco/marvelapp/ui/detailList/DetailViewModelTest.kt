@@ -10,17 +10,21 @@ import com.joaquinco.marvelapp.utils.generatePresentationSeriesFlow
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class DetailViewModelTest {
 
     @get:Rule
@@ -33,6 +37,7 @@ class DetailViewModelTest {
     private lateinit var repository: Repository
 
     private val mainThreadSubrrogate = newSingleThreadContext("UI thread")
+
 
     @Before
     fun setUp() {
@@ -61,6 +66,12 @@ class DetailViewModelTest {
         ) )
 
         collectJob.cancel()
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        mainThreadSubrrogate.close()
     }
 
 }
